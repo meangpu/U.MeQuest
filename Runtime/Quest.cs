@@ -1,6 +1,6 @@
-using UnityEngine;
-
-public class Quest : MonoBehaviour
+namespace Meangpu.Quest
 {
-        
+    public struct Quest
+    {
+    }
 }
