@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace Meangpu.Quest
 {
@@ -18,12 +19,39 @@ namespace Meangpu.Quest
             return idToQuestMap;
         }
 
-        private void Awake()
+        private void Awake() => _questMap = CreateQuestMap();
+
+        void OnEnable()
         {
-            _questMap = CreateQuestMap();
-            Quest nowQuest = GetQuestByID("CollectCoin");
-            Debug.Log(nowQuest.Info.DisplayName);
-            Debug.Log(nowQuest.Info.ExpReward);
+            QuestEvent.OnStartQuest += StartQuest;
+            QuestEvent.OnAdvanceQuest += AdvanceQuest;
+            QuestEvent.OnFinishQuest += FinishQuest;
+        }
+        void OnDisable()
+        {
+            QuestEvent.OnStartQuest -= StartQuest;
+            QuestEvent.OnAdvanceQuest -= AdvanceQuest;
+            QuestEvent.OnFinishQuest -= FinishQuest;
+        }
+
+        private void Start()
+        {
+            foreach (Quest quest in _questMap.Values) QuestEvent.QuestStateChange(quest);
+        }
+
+        private void StartQuest(string obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AdvanceQuest(string obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FinishQuest(string obj)
+        {
+            throw new NotImplementedException();
         }
 
         private Quest GetQuestByID(string id)
