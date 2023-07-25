@@ -20,7 +20,11 @@ namespace Meangpu.Quest
         public void InstantiateCurrentQuestStep(Transform parentTransform)
         {
             GameObject questStepPrefab = GetCurrentQuestStepPrefab();
-            if (questStepPrefab != null) Object.Instantiate(questStepPrefab, parentTransform);
+            if (questStepPrefab != null)
+            {
+                QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform).GetComponent<QuestStep>();
+                questStep.InitializeQuestStep(Info.Id);
+            }
         }
 
         private GameObject GetCurrentQuestStepPrefab()
