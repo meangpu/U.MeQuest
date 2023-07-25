@@ -1,12 +1,13 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Meangpu.Quest
 {
     public class QuestInfoDisplay : MonoBehaviour
     {
         [SerializeField] QuestInfoHolderUI questPrefab;
+
+        private Dictionary<string, Quest> _questMap;
 
         void OnEnable()
         {
@@ -21,7 +22,7 @@ namespace Meangpu.Quest
 
         private void AddQuestToUI(string id)
         {
-            QuestInfoHolderUI nowUI = Instantiate(questPrefab, transform);
+            // QuestInfoHolderUI nowUI = Instantiate(questPrefab, transform);
             // nowUI.SetQuestUIData(quest.Info);
         }
 
