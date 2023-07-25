@@ -15,7 +15,7 @@ namespace Meangpu.Quest
             foreach (SOQuestInfo questInfo in allQuest)
             {
                 if (idToQuestMap.ContainsKey(questInfo.Id)) Debug.Log($"Duplicate quest id found! {questInfo.Id}");
-                idToQuestMap.Add(questInfo.Id, new Quest(questInfo));
+                idToQuestMap.Add(questInfo.Id, LoadQuest(questInfo));
             }
             return idToQuestMap;
         }
@@ -45,7 +45,14 @@ namespace Meangpu.Quest
 
         private void Start()
         {
-            foreach (Quest quest in _questMap.Values) QuestEvent.QuestStateChange(quest);
+            foreach (Quest quest in _questMap.Values)
+            {
+                if (quest.State == QuestState.IN_PROGRESS)
+                {
+                    quest.InstantiateCurrentQuestStep(transform);
+                }
+                QuestEvent.QuestStateChange(quest);
+            }
         }
 
         private void ChangeQuestState(string id, QuestState newState)
@@ -121,11 +128,9 @@ namespace Meangpu.Quest
 
         private void OnApplicationQuit()
         {
-            foreach (Quest quest in _questMap.Values)
-            {
-                SaveQuest(quest);
-            }
+            foreach (Quest quest in _questMap.Values) SaveQuest(quest);
         }
+
         void SaveQuest(Quest quest)
         {
             try
@@ -139,6 +144,30 @@ namespace Meangpu.Quest
             {
                 Debug.LogError("fail to save quest with id" + quest.Info.Id + ":" + e);
             }
+        }
+
+        private Quest LoadQuest(SOQuestInfo questInfo)
+        {
+            Quest quest = null;
+
+            try
+            {
+                if (PlayerPrefs.HasKey(questInfo.Id))
+                {
+                    string serializedData = PlayerPrefs.GetString(questInfo.Id);
+                    QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
+                    quest = new Quest(questInfo, questData.State, questData.QuestStepIndex, questData.QuestStepStates);
+                }
+                else
+                {
+                    quest = new Quest(questInfo);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("fail to save quest with id" + quest.Info.Id + ":" + e);
+            }
+            return quest;
         }
     }
 }

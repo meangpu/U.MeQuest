@@ -8,10 +8,11 @@ namespace Meangpu.Quest
         string _questId;
         int _stepIndex;
 
-        public void InitializeQuestStep(string questId, int stepIndex)
+        public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
         {
             _questId = questId;
             _stepIndex = stepIndex;
+            if (!string.IsNullOrEmpty(questStepState)) SetQuestStepState(questStepState);
         }
 
         protected void FinishQuestStep()
@@ -24,8 +25,11 @@ namespace Meangpu.Quest
             }
         }
         protected void ChangeState(string newState)
+
         {
             QuestEvent.QuestStepStateChange(_questId, _stepIndex, new QuestStepState(newState));
         }
+
+        protected abstract void SetQuestStepState(string state);
     }
 }

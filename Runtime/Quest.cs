@@ -20,6 +20,15 @@ namespace Meangpu.Quest
             }
         }
 
+        public Quest(SOQuestInfo questInfo, QuestState questState, int currentQuestStepIndex, QuestStepState[] questStepStates)
+        {
+            Info = questInfo;
+            State = questState;
+            _currentQuestStepIndex = currentQuestStepIndex;
+            _questStepStates = questStepStates;
+            if (questStepStates.Length != Info.QuestStepPrefabs.Length) Debug.LogWarning("Data is out of sync");
+        }
+
         public void MoveToNextStep() => _currentQuestStepIndex++;
         public bool IsCurrentStepExists() => _currentQuestStepIndex < Info.QuestStepPrefabs.Length;
 
@@ -29,7 +38,7 @@ namespace Meangpu.Quest
             if (questStepPrefab != null)
             {
                 QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform).GetComponent<QuestStep>();
-                questStep.InitializeQuestStep(Info.Id, _currentQuestStepIndex);
+                questStep.InitializeQuestStep(Info.Id, _currentQuestStepIndex, _questStepStates[_currentQuestStepIndex].State);
             }
         }
 
