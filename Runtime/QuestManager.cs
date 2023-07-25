@@ -96,6 +96,7 @@ namespace Meangpu.Quest
         }
 
         // todo delete 
+
         private void Update()
         {
             foreach (Quest quest in _questMap.Values)
