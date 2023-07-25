@@ -7,8 +7,6 @@ namespace Meangpu.Quest
     {
         [SerializeField] QuestInfoHolderUI questPrefab;
 
-        private Dictionary<string, Quest> _questMap;
-
         void OnEnable()
         {
             // QuestEvent.OnQuestStateChange += UpdateQuestUI;
