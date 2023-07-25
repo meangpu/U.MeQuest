@@ -8,6 +8,7 @@ namespace Meangpu.Quest
         [field: SerializeField] public string Id { get; private set; }
         [Header("General")]
         public string DisplayName;
+        public string Description;
 
         [Header("Requirement")]
         public int LevelRequirement;
@@ -17,14 +18,12 @@ namespace Meangpu.Quest
         public GameObject[] QuestStepPrefabs;
 
         [Header("Rewards")]
-        public GameObject[] RewardPrefab; // make class with interface IGetReward
-        public int GoldReward;
-        public int ExpReward;
+        public QuestReward[] RewardPrefab;
 
         private void OnValidate()
         {
 #if UNITY_EDITOR
-            Id = this.name;
+            Id = name;
             UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }

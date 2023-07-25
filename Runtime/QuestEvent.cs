@@ -4,6 +4,9 @@ namespace Meangpu.Quest
 {
     public static class QuestEvent
     {
+        public static event Action<int> OnSetPlayerLevel;
+        public static void SetPlayerLevel(int playerLevel) => OnSetPlayerLevel?.Invoke(playerLevel);
+
         public static event Action<string> OnStartQuest;
         public static void StartQuest(string id) => OnStartQuest?.Invoke(id);
 

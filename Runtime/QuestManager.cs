@@ -6,6 +6,8 @@ namespace Meangpu.Quest
 {
     public class QuestManager : MonoBehaviour
     {
+        [Header("Config")]
+        [SerializeField] bool _doLoadDataFromSave;
         private int _playerCurrentLevel;
         private Dictionary<string, Quest> _questMap;
         private Dictionary<string, Quest> CreateQuestMap()
@@ -15,6 +17,7 @@ namespace Meangpu.Quest
             foreach (SOQuestInfo questInfo in allQuest)
             {
                 if (idToQuestMap.ContainsKey(questInfo.Id)) Debug.Log($"Duplicate quest id found! {questInfo.Id}");
+
                 idToQuestMap.Add(questInfo.Id, LoadQuest(questInfo));
             }
             return idToQuestMap;
@@ -28,6 +31,8 @@ namespace Meangpu.Quest
 
         void OnEnable()
         {
+            QuestEvent.OnSetPlayerLevel += SetPlayerLevel;
+
             QuestEvent.OnStartQuest += StartQuest;
             QuestEvent.OnAdvanceQuest += AdvanceQuest;
             QuestEvent.OnFinishQuest += FinishQuest;
@@ -36,11 +41,19 @@ namespace Meangpu.Quest
         }
         void OnDisable()
         {
+            QuestEvent.OnSetPlayerLevel -= SetPlayerLevel;
+
             QuestEvent.OnStartQuest -= StartQuest;
             QuestEvent.OnAdvanceQuest -= AdvanceQuest;
             QuestEvent.OnFinishQuest -= FinishQuest;
 
             QuestEvent.OnQuestStepStateChange -= QuestStepStateChange;
+        }
+
+        private void SetPlayerLevel(int newLevel)
+        {
+            _playerCurrentLevel = newLevel;
+            UpdateQuestThatPlayerCanStart();
         }
 
         private void Start()
@@ -96,6 +109,7 @@ namespace Meangpu.Quest
             Quest quest = GetQuestByID(id);
             ClaimReward(quest);
             ChangeQuestState(quest.Info.Id, QuestState.FINISHED);
+            UpdateQuestThatPlayerCanStart();
         }
 
         private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
@@ -107,6 +121,10 @@ namespace Meangpu.Quest
 
         private void ClaimReward(Quest quest)
         {
+            if (quest.Info.RewardPrefab.Length > 0)
+            {
+                foreach (QuestReward reward in quest.Info.RewardPrefab) reward.GetReward();
+            }
             Debug.Log($"get reward from {quest.Info.Id}");
         }
 
@@ -138,7 +156,7 @@ namespace Meangpu.Quest
                 QuestData questData = quest.GetQuestData();
                 string serializedData = JsonUtility.ToJson(questData);
                 PlayerPrefs.SetString(quest.Info.Id, serializedData);
-                Debug.Log($"{serializedData}");
+                // Debug.Log($"{serializedData}");
             }
             catch (Exception e)
             {
@@ -152,7 +170,7 @@ namespace Meangpu.Quest
 
             try
             {
-                if (PlayerPrefs.HasKey(questInfo.Id))
+                if (PlayerPrefs.HasKey(questInfo.Id) && _doLoadDataFromSave)
                 {
                     string serializedData = PlayerPrefs.GetString(questInfo.Id);
                     QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
