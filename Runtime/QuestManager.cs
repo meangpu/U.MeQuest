@@ -20,19 +20,27 @@ namespace Meangpu.Quest
             return idToQuestMap;
         }
 
-        private void Awake() => _questMap = CreateQuestMap();
+        private void Awake()
+        {
+            _questMap = CreateQuestMap();
+            UpdateQuestThatPlayerCanStart();
+        }
 
         void OnEnable()
         {
             QuestEvent.OnStartQuest += StartQuest;
             QuestEvent.OnAdvanceQuest += AdvanceQuest;
             QuestEvent.OnFinishQuest += FinishQuest;
+
+            QuestEvent.OnQuestStepStateChange += QuestStepStateChange;
         }
         void OnDisable()
         {
             QuestEvent.OnStartQuest -= StartQuest;
             QuestEvent.OnAdvanceQuest -= AdvanceQuest;
             QuestEvent.OnFinishQuest -= FinishQuest;
+
+            QuestEvent.OnQuestStepStateChange -= QuestStepStateChange;
         }
 
         private void Start()
@@ -83,6 +91,13 @@ namespace Meangpu.Quest
             ChangeQuestState(quest.Info.Id, QuestState.FINISHED);
         }
 
+        private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+        {
+            Quest quest = GetQuestByID(id);
+            quest.StoreQuestStepState(questStepState, stepIndex);
+            ChangeQuestState(id, quest.State);
+        }
+
         private void ClaimReward(Quest quest)
         {
             Debug.Log($"get reward from {quest.Info.Id}");
@@ -95,14 +110,34 @@ namespace Meangpu.Quest
             return quest;
         }
 
-        // todo delete 
-
-        private void Update()
+        void UpdateQuestThatPlayerCanStart()
         {
             foreach (Quest quest in _questMap.Values)
             {
                 if (quest.State == QuestState.REQUIREMENTS_NOT_MET && CheckPlayerRequirement(quest))
                     ChangeQuestState(quest.Info.Id, QuestState.CAN_START);
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            foreach (Quest quest in _questMap.Values)
+            {
+                SaveQuest(quest);
+            }
+        }
+        void SaveQuest(Quest quest)
+        {
+            try
+            {
+                QuestData questData = quest.GetQuestData();
+                string serializedData = JsonUtility.ToJson(questData);
+                PlayerPrefs.SetString(quest.Info.Id, serializedData);
+                Debug.Log($"{serializedData}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("fail to save quest with id" + quest.Info.Id + ":" + e);
             }
         }
     }

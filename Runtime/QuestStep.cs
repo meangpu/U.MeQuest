@@ -6,10 +6,12 @@ namespace Meangpu.Quest
     {
         bool _isFinish;
         string _questId;
+        int _stepIndex;
 
-        public void InitializeQuestStep(string questId)
+        public void InitializeQuestStep(string questId, int stepIndex)
         {
             _questId = questId;
+            _stepIndex = stepIndex;
         }
 
         protected void FinishQuestStep()
@@ -20,6 +22,10 @@ namespace Meangpu.Quest
                 QuestEvent.AdvanceQuest(_questId);
                 Destroy(gameObject);
             }
+        }
+        protected void ChangeState(string newState)
+        {
+            QuestEvent.QuestStepStateChange(_questId, _stepIndex, new QuestStepState(newState));
         }
     }
 }

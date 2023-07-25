@@ -15,5 +15,11 @@ namespace Meangpu.Quest
 
         public static event Action<Quest> OnQuestStateChange;
         public static void QuestStateChange(Quest quest) => OnQuestStateChange?.Invoke(quest);
+
+        public static event Action<string, int, QuestStepState> OnQuestStepStateChange;
+        public static void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+        {
+            OnQuestStepStateChange?.Invoke(id, stepIndex, questStepState);
+        }
     }
 }
