@@ -22,7 +22,7 @@ namespace Meangpu.Quest
         [SerializeField] TMP_Text _requirementLevel;
         [SerializeField] TMP_Text _requirementQuest;
 
-        Button _firstSelectedButton;
+        Button _lastSelectedButton;
 
         void OnEnable()
         {
@@ -44,6 +44,7 @@ namespace Meangpu.Quest
         private void HideUI()
         {
             _parentQuestInfo.SetActive(false);
+            EventSystem.current.currentSelectedGameObject.TryGetComponent(out _lastSelectedButton);
             EventSystem.current.SetSelectedGameObject(null);
         }
 
@@ -51,9 +52,9 @@ namespace Meangpu.Quest
         {
             _parentQuestInfo.SetActive(true);
 
-            if (_firstSelectedButton != null)
+            if (_lastSelectedButton != null)
             {
-                _firstSelectedButton.Select();
+                _lastSelectedButton.Select();
             }
         }
 
@@ -61,9 +62,9 @@ namespace Meangpu.Quest
         {
             QuestLogButton logEntry = _scrollList.CreateButtonIfNotExist(quest, () => { SetQuestInfo(quest); });
 
-            if (_firstSelectedButton == null)
+            if (_lastSelectedButton == null)
             {
-                _firstSelectedButton = logEntry.Button;
+                _lastSelectedButton = logEntry.Button;
             }
             logEntry.SetTextColorByState(quest.State);
         }
