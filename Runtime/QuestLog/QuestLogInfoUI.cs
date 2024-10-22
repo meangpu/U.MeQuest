@@ -1,11 +1,15 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using VInspector;
 
 namespace Meangpu.Quest
 {
     public class QuestLogInfoUI : MonoBehaviour
     {
+        [SerializeField] GameObject _parentQuestInfo;
+
         [SerializeField] QuestLogScrollList _scrollList;
         [Header("Text")]
         [SerializeField] TMP_Text _questName;
@@ -19,6 +23,29 @@ namespace Meangpu.Quest
         [SerializeField] TMP_Text _requirementQuest;
 
         Button _firstSelectedButton;
+
+        [Button]
+        public void ToggleQuestLog()
+        {
+            if (_parentQuestInfo.activeSelf) HideUI();
+            else ShowUI();
+        }
+
+        private void HideUI()
+        {
+            _parentQuestInfo.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
+        private void ShowUI()
+        {
+            _parentQuestInfo.SetActive(true);
+
+            if (_firstSelectedButton == null)
+            {
+                _firstSelectedButton.Select();
+            }
+        }
 
         void OnEnable()
         {
@@ -36,9 +63,7 @@ namespace Meangpu.Quest
             if (_firstSelectedButton == null)
             {
                 _firstSelectedButton = logEntry.Button;
-                _firstSelectedButton.Select();
             }
-
             logEntry.SetTextColorByState(quest.State);
         }
 
