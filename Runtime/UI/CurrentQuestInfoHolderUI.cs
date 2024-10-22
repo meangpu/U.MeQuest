@@ -3,7 +3,7 @@ using TMPro;
 
 namespace Meangpu.Quest
 {
-    public class QuestInfoHolderUI : MonoBehaviour
+    public class CurrentQuestInfoHolderUI : MonoBehaviour
     {
         public SOQuestInfo Info { get; private set; }
 

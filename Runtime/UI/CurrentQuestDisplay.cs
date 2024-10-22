@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Meangpu.Quest
 {
-    public class QuestInfoDisplay : MonoBehaviour
+    public class CurrentQuestDisplay : MonoBehaviour
     {
-        [SerializeField] QuestInfoHolderUI questPrefab;
+        [SerializeField] CurrentQuestInfoHolderUI questPrefab;
 
         void OnEnable()
         {
@@ -20,7 +20,7 @@ namespace Meangpu.Quest
 
         private void AddQuestToUI(SOQuestInfo questInfo)
         {
-            QuestInfoHolderUI nowUI = Instantiate(questPrefab, transform);
+            CurrentQuestInfoHolderUI nowUI = Instantiate(questPrefab, transform);
             nowUI.SetQuestUIData(questInfo);
         }
 
