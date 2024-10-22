@@ -23,28 +23,35 @@ namespace Meangpu.Quest
         void OnEnable()
         {
             QuestEvent.OnQuestStateChange += QuestStateChange;
+            QuestEvent.OnQuestStateChange += UpdateQuestStatus;
         }
         void OnDisable()
         {
             QuestEvent.OnQuestStateChange -= QuestStateChange;
+            QuestEvent.OnQuestStateChange -= UpdateQuestStatus;
         }
 
         void QuestStateChange(Quest quest)
         {
             QuestLogButton logEntry = _scrollList.CreateButtonIfNotExist(quest, () => { SetQuestInfo(quest); });
+
             if (_firstSelectedButton == null)
             {
                 _firstSelectedButton = logEntry.Button;
                 _firstSelectedButton.Select();
             }
+
             logEntry.SetTextColorByState(quest.State);
+        }
+
+        void UpdateQuestStatus(Quest quest)
+        {
+            _questStatus.SetText(quest.GetFullStatusText());
         }
 
         void SetQuestInfo(Quest quest)
         {
-            Debug.Log($"{quest.GetFullStatusText()}");
             _questName.SetText(quest.Info.DisplayName);
-            _questStatus.SetText(quest.GetFullStatusText());
 
             _requirementLevel.SetText(quest.Info.LevelRequirement.ToString());
             _requirementQuest.SetText("");

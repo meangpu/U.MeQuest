@@ -55,6 +55,7 @@ namespace Meangpu.Quest
             QuestLogButton current_log = Instantiate(_logPrefab, _parent);
             RectTransform buttonRect = current_log.GetComponent<RectTransform>();
 
+
             current_log.Initialize(quest.Info.DisplayName, () =>
             {
                 selectAction();

@@ -439,7 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2893b11e5e78840a14989b957b364e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 649643290227172912}
   _scrollList: {fileID: 4961870034354967146}
   _questName: {fileID: 6057087291405087425}
   _questStatus: {fileID: 5327030787472387363}
