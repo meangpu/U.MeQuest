@@ -23,12 +23,10 @@ namespace Meangpu.Quest
         void OnEnable()
         {
             QuestEvent.OnQuestStateChange += QuestStateChange;
-            QuestEvent.OnQuestStateChange += UpdateQuestStatus;
         }
         void OnDisable()
         {
             QuestEvent.OnQuestStateChange -= QuestStateChange;
-            QuestEvent.OnQuestStateChange -= UpdateQuestStatus;
         }
 
         void QuestStateChange(Quest quest)
@@ -44,15 +42,11 @@ namespace Meangpu.Quest
             logEntry.SetTextColorByState(quest.State);
         }
 
-        void UpdateQuestStatus(Quest quest)
-        {
-            _questStatus.SetText(quest.GetFullStatusText());
-        }
 
         void SetQuestInfo(Quest quest)
         {
             _questName.SetText(quest.Info.DisplayName);
-
+            _questStatus.SetText(quest.GetFullStatusText());
             _requirementLevel.SetText(quest.Info.LevelRequirement.ToString());
             _requirementQuest.SetText("");
             foreach (SOQuestInfo requirement in quest.Info.QuestPrerequisites)
