@@ -98,7 +98,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -270,3 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e223bebedfad124cacd3321f584cce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colReqNotMet: {r: 0.38431373, g: 0.40784314, b: 0.44705883, a: 1}
+  _colCanStart: {r: 0.77254903, g: 0.3019608, b: 0.38511848, a: 1}
+  _colInProgress: {r: 0.7924528, g: 0.62352294, b: 0.34015664, a: 1}
+  _colCanFinish: {r: 0.13924529, g: 0.5660378, b: 0.38216928, a: 1}
+  _colFInished: {r: 0.10878432, g: 0.3598129, b: 0.57254905, a: 1}

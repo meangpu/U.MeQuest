@@ -31,20 +31,19 @@ namespace Meangpu.Quest
 
         void QuestStateChange(Quest quest)
         {
-            QuestLogButton log = _scrollList.CreateButtonIfNotExist(quest, () => { SetQuestInfo(quest); });
+            QuestLogButton logEntry = _scrollList.CreateButtonIfNotExist(quest, () => { SetQuestInfo(quest); });
             if (_firstSelectedButton == null)
             {
-                _firstSelectedButton = log.Button;
+                _firstSelectedButton = logEntry.Button;
                 _firstSelectedButton.Select();
             }
+            logEntry.SetTextColorByState(quest.State);
         }
 
         void SetQuestInfo(Quest quest)
         {
             _questName.SetText(quest.Info.DisplayName);
-
             _questName.SetText(quest.Info.DisplayName);
-
 
             _requirementLevel.SetText(quest.Info.LevelRequirement.ToString());
             _requirementQuest.SetText("");

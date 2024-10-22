@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using VInspector;
 
 namespace Meangpu.Quest
 {
@@ -17,22 +18,22 @@ namespace Meangpu.Quest
 
         private Dictionary<SOQuestInfo, QuestLogButton> idToButtonMap = new();
 
-        private void Start()
+        [Button]
+        public void CreateTestQuestData(int count = 20)
         {
-            // for (int i = 0, length = 20; i < length; i++)
-            // {
-            //     SOQuestInfo soTest = ScriptableObject.CreateInstance<SOQuestInfo>();
-            //     soTest.name = $"wow{i}";
-            //     soTest.DisplayName = $"wow{i}";
-            //     soTest.QuestStepPrefabs = new QuestStep[i];
-            //     Quest quest = new(soTest);
-
-            //     QuestLogButton log = CreateButtonIfNotExist(quest, () => { Debug.Log($"{soTest.DisplayName}"); });
-            //     if (i == 0)
-            //     {
-            //         log.Button.Select();
-            //     }
-            // }
+            for (int i = 0, length = count; i < length; i++)
+            {
+                SOQuestInfo soTest = ScriptableObject.CreateInstance<SOQuestInfo>();
+                soTest.name = $"wow{i}";
+                soTest.DisplayName = $"wow{i}";
+                soTest.QuestStepPrefabs = new QuestStep[i];
+                Quest quest = new(soTest);
+                QuestLogButton log = CreateButtonIfNotExist(quest, () => { Debug.Log($"{soTest.DisplayName}"); });
+                if (i == 0)
+                {
+                    log.Button.Select();
+                }
+            }
         }
 
         public QuestLogButton CreateButtonIfNotExist(Quest quest, UnityAction selectAction)
