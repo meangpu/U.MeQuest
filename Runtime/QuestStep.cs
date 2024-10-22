@@ -24,8 +24,8 @@ namespace Meangpu.Quest
                 Destroy(gameObject);
             }
         }
-        protected void ChangeState(string newState)
 
+        protected void ChangeState(string newState)
         {
             QuestEvent.QuestStepStateChange(_questId, _stepIndex, new QuestStepState(newState));
         }
