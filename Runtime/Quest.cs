@@ -39,7 +39,7 @@ namespace Meangpu.Quest
             if (questStepPrefab != null)
             {
                 QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform).GetComponent<QuestStep>();
-                questStep.InitializeQuestStep(Info.Id, _currentQuestStepIndex, _questStepStates[_currentQuestStepIndex].State);
+                questStep.InitializeQuestStep(Info, _currentQuestStepIndex, _questStepStates[_currentQuestStepIndex].State);
             }
         }
 

@@ -9,13 +9,13 @@ namespace Meangpu.Quest
         [SerializeField] GameObject _canStartIcon;
         [SerializeField] GameObject _requirementNotFinishIcon;
         [SerializeField] GameObject _canFinishIcon;
+
         public void SetState(QuestState newState, bool isStartPoint, bool isFinishPoint)
         {
             _requirementNotMetIcon.SetActive(false);
             _canStartIcon.SetActive(false);
             _requirementNotFinishIcon.SetActive(false);
             _canFinishIcon.SetActive(false);
-
             switch (newState)
             {
                 case QuestState.REQUIREMENTS_NOT_MET:

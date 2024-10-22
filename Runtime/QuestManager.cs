@@ -9,16 +9,17 @@ namespace Meangpu.Quest
         [Header("Config")]
         [SerializeField] bool _doLoadDataFromSave;
         private int _playerCurrentLevel;
-        private Dictionary<string, Quest> _questMap;
-        private Dictionary<string, Quest> CreateQuestMap()
+        private Dictionary<SOQuestInfo, Quest> _questMap;
+
+        private Dictionary<SOQuestInfo, Quest> CreateQuestMap()
         {
             SOQuestInfo[] allQuest = Resources.LoadAll<SOQuestInfo>("Quests");
-            Dictionary<string, Quest> idToQuestMap = new();
+            Dictionary<SOQuestInfo, Quest> idToQuestMap = new();
+
             foreach (SOQuestInfo questInfo in allQuest)
             {
-                if (idToQuestMap.ContainsKey(questInfo.Id)) Debug.Log($"Duplicate quest id found! {questInfo.Id}");
-
-                idToQuestMap.Add(questInfo.Id, LoadQuest(questInfo));
+                if (idToQuestMap.ContainsKey(questInfo)) Debug.Log($"Duplicate quest id found! {questInfo}");
+                idToQuestMap.Add(questInfo, LoadQuest(questInfo));
             }
             return idToQuestMap;
         }
@@ -68,7 +69,7 @@ namespace Meangpu.Quest
             }
         }
 
-        private void ChangeQuestState(string id, QuestState newState)
+        private void ChangeQuestState(SOQuestInfo id, QuestState newState)
         {
             Quest nowQuest = GetQuestByID(id);
             nowQuest.State = newState;
@@ -81,7 +82,7 @@ namespace Meangpu.Quest
             if (_playerCurrentLevel < quest.Info.LevelRequirement) isMeetRequirement = false;
             foreach (SOQuestInfo prerequisiteQuestInfo in quest.Info.QuestPrerequisites)
             {
-                if (GetQuestByID(prerequisiteQuestInfo.Id).State != QuestState.FINISHED)
+                if (GetQuestByID(prerequisiteQuestInfo).State != QuestState.FINISHED)
                 {
                     isMeetRequirement = false;
                 }
@@ -89,30 +90,30 @@ namespace Meangpu.Quest
             return isMeetRequirement;
         }
 
-        private void StartQuest(string id)
+        private void StartQuest(SOQuestInfo id)
         {
             Quest quest = GetQuestByID(id);
             quest.InstantiateCurrentQuestStep(transform);
-            ChangeQuestState(quest.Info.Id, QuestState.IN_PROGRESS);
+            ChangeQuestState(quest.Info, QuestState.IN_PROGRESS);
         }
 
-        private void AdvanceQuest(string id)
+        private void AdvanceQuest(SOQuestInfo id)
         {
             Quest quest = GetQuestByID(id);
             quest.MoveToNextStep();
             if (quest.IsCurrentStepExists()) quest.InstantiateCurrentQuestStep(transform);
-            else ChangeQuestState(quest.Info.Id, QuestState.CAN_FINISH);
+            else ChangeQuestState(quest.Info, QuestState.CAN_FINISH);
         }
 
-        private void FinishQuest(string id)
+        private void FinishQuest(SOQuestInfo id)
         {
             Quest quest = GetQuestByID(id);
             ClaimReward(quest);
-            ChangeQuestState(quest.Info.Id, QuestState.FINISHED);
+            ChangeQuestState(quest.Info, QuestState.FINISHED);
             UpdateQuestThatPlayerCanStart();
         }
 
-        private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+        private void QuestStepStateChange(SOQuestInfo id, int stepIndex, QuestStepState questStepState)
         {
             Quest quest = GetQuestByID(id);
             quest.StoreQuestStepState(questStepState, stepIndex);
@@ -128,10 +129,10 @@ namespace Meangpu.Quest
             Debug.Log($"get reward from {quest.Info.Id}");
         }
 
-        private Quest GetQuestByID(string id)
+        private Quest GetQuestByID(SOQuestInfo questInfo)
         {
-            Quest quest = _questMap[id];
-            if (quest == null) Debug.LogError($"no quest with {id} found");
+            Quest quest = _questMap[questInfo];
+            if (quest == null) Debug.LogError($"no quest with {questInfo} found");
             return quest;
         }
 
@@ -140,7 +141,7 @@ namespace Meangpu.Quest
             foreach (Quest quest in _questMap.Values)
             {
                 if (quest.State == QuestState.REQUIREMENTS_NOT_MET && CheckPlayerRequirement(quest))
-                    ChangeQuestState(quest.Info.Id, QuestState.CAN_START);
+                    ChangeQuestState(quest.Info, QuestState.CAN_START);
             }
         }
 

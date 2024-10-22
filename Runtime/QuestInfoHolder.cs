@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Meangpu.Quest
@@ -8,7 +7,7 @@ namespace Meangpu.Quest
         [Header("Quest")]
         [SerializeField] SOQuestInfo _questData;
         public SOQuestInfo QuestData => _questData;
-        private string _questId;
+
         private QuestState _currentQuestState;
         private QuestIcon _questIconScript;
 
@@ -18,7 +17,6 @@ namespace Meangpu.Quest
 
         private void Awake()
         {
-            _questId = _questData.Id;
             _questIconScript = GetComponentInChildren<QuestIcon>();
         }
 
@@ -33,7 +31,7 @@ namespace Meangpu.Quest
 
         private void OnQuestStateChange(Quest quest)
         {
-            if (quest.Info.Id.Equals(_questId))
+            if (quest.Info.Equals(_questData))
             {
                 _currentQuestState = quest.State;
                 _questIconScript.SetState(_currentQuestState, _isStartPoint, _isFinishPoint);
@@ -42,8 +40,8 @@ namespace Meangpu.Quest
 
         public void OnGetTrigger()
         {
-            if (_currentQuestState.Equals(QuestState.CAN_START) && _isStartPoint) QuestEvent.StartQuest(_questId);
-            else if (_currentQuestState.Equals(QuestState.CAN_FINISH) && _isFinishPoint) QuestEvent.FinishQuest(_questId);
+            if (_currentQuestState.Equals(QuestState.CAN_START) && _isStartPoint) QuestEvent.StartQuest(_questData);
+            else if (_currentQuestState.Equals(QuestState.CAN_FINISH) && _isFinishPoint) QuestEvent.FinishQuest(_questData);
         }
     }
 }

@@ -10,6 +10,21 @@ namespace Meangpu.Quest
         [SerializeField] TMP_Text _questName;
         [SerializeField] TMP_Text _questDes;
 
+        void OnEnable()
+        {
+            QuestEvent.OnFinishQuest += RemoveQuest;
+        }
+
+        void OnDisable()
+        {
+            QuestEvent.OnFinishQuest -= RemoveQuest;
+        }
+
+        private void RemoveQuest(SOQuestInfo info)
+        {
+            if (info.Equals(Info)) Destroy(gameObject);
+        }
+
         public void SetQuestUIData(SOQuestInfo questInfo)
         {
             Info = questInfo;

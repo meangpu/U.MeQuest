@@ -5,10 +5,10 @@ namespace Meangpu.Quest
     public abstract class QuestStep : MonoBehaviour
     {
         bool _isFinish;
-        string _questId;
+        SOQuestInfo _questId;
         int _stepIndex;
 
-        public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
+        public void InitializeQuestStep(SOQuestInfo questId, int stepIndex, string questStepState)
         {
             _questId = questId;
             _stepIndex = stepIndex;
