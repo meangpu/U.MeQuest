@@ -24,6 +24,16 @@ namespace Meangpu.Quest
 
         Button _firstSelectedButton;
 
+        void OnEnable()
+        {
+            QuestEvent.OnQuestStateChange += QuestStateChange;
+        }
+        void OnDisable()
+        {
+            QuestEvent.OnQuestStateChange -= QuestStateChange;
+        }
+
+
         [Button]
         public void ToggleQuestLog()
         {
@@ -45,15 +55,6 @@ namespace Meangpu.Quest
             {
                 _firstSelectedButton.Select();
             }
-        }
-
-        void OnEnable()
-        {
-            QuestEvent.OnQuestStateChange += QuestStateChange;
-        }
-        void OnDisable()
-        {
-            QuestEvent.OnQuestStateChange -= QuestStateChange;
         }
 
         void QuestStateChange(Quest quest)
