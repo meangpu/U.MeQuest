@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.14117648, g: 0.14901961, b: 0.16862746, a: 1}
     m_HighlightedColor: {r: 0.18431373, g: 0.19607843, b: 0.21960784, a: 1}
-    m_PressedColor: {r: 0.25490198, g: 0.27058825, b: 0.29803923, a: 1}
+    m_PressedColor: {r: 0.18431373, g: 0.19607843, b: 0.21960784, a: 1}
     m_SelectedColor: {r: 0.25490198, g: 0.27058825, b: 0.29803923, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -265,13 +265,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8905848465842246888}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e223bebedfad124cacd3321f584cce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _colReqNotMet: {r: 0.38431373, g: 0.40784314, b: 0.44705883, a: 1}
   _colCanStart: {r: 0.77254903, g: 0.3019608, b: 0.38511848, a: 1}
-  _colInProgress: {r: 0.7924528, g: 0.62352294, b: 0.34015664, a: 1}
+  _colInProgress: {r: 0.67058825, g: 0.549482, b: 0.34602353, a: 1}
   _colCanFinish: {r: 0.13924529, g: 0.5660378, b: 0.38216928, a: 1}
   _colFInished: {r: 0.10878432, g: 0.3598129, b: 0.57254905, a: 1}
