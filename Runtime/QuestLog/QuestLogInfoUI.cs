@@ -6,8 +6,8 @@ namespace Meangpu.Quest
 {
     public class QuestLogInfoUI : MonoBehaviour
     {
-        [SerializeField] Transform _parent;
         [SerializeField] QuestLogScrollList _scrollList;
+        [Header("Text")]
         [SerializeField] TMP_Text _questName;
         [SerializeField] TMP_Text _questStatus;
 
@@ -44,6 +44,9 @@ namespace Meangpu.Quest
         {
             _questName.SetText(quest.Info.DisplayName);
             _questName.SetText(quest.Info.DisplayName);
+
+            Debug.Log($"{quest.GetFullStatusText()}");
+            _questStatus.SetText(quest.GetFullStatusText());
 
             _requirementLevel.SetText(quest.Info.LevelRequirement.ToString());
             _requirementQuest.SetText("");

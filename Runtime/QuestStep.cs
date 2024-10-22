@@ -25,9 +25,9 @@ namespace Meangpu.Quest
             }
         }
 
-        protected void ChangeState(string newState)
+        protected void ChangeState(string newState, string newStatus)
         {
-            QuestEvent.QuestStepStateChange(_questId, _stepIndex, new QuestStepState(newState));
+            QuestEvent.QuestStepStateChange(_questId, _stepIndex, new QuestStepState(newState, newStatus));
         }
 
         protected abstract void SetQuestStepState(string state);

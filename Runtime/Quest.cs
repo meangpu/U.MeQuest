@@ -56,6 +56,7 @@ namespace Meangpu.Quest
             if (stepIndex < _questStepStates.Length)
             {
                 _questStepStates[stepIndex].State = questStepState.State;
+                _questStepStates[stepIndex].Status = questStepState.Status;
             }
             else
             {
@@ -66,6 +67,41 @@ namespace Meangpu.Quest
         public QuestData GetQuestData()
         {
             return new QuestData(State, _currentQuestStepIndex, _questStepStates);
+        }
+
+        public string GetFullStatusText()
+        {
+            string fullStatus = "";
+            if (State == QuestState.REQUIREMENTS_NOT_MET)
+            {
+                fullStatus = "Requirements not met";
+            }
+            else if (State == QuestState.CAN_START)
+            {
+                fullStatus = "Can start";
+            }
+            else
+            {
+                for (int i = 0; i < _currentQuestStepIndex; i++)
+                {
+                    fullStatus += $"<s>{_questStepStates[i].Status}</s>\n";
+                }
+                if (IsCurrentStepExists())
+                {
+                    fullStatus += $"{_questStepStates[_currentQuestStepIndex].Status}\n";
+                }
+                if (State == QuestState.CAN_FINISH)
+                {
+                    fullStatus += $"Quest is ready to be turned in\n";
+                }
+                else if (State == QuestState.FINISHED)
+                {
+                    fullStatus += $"Quest completed!\n";
+                }
+
+            }
+
+            return fullStatus;
         }
     }
 }

@@ -4,8 +4,18 @@ namespace Meangpu.Quest
     public class QuestStepState
     {
         public string State;
+        public string Status;
 
-        public QuestStepState(string state) => State = state;
-        public QuestStepState() => State = "";
+        public QuestStepState(string state, string status)
+        {
+            State = state;
+            Status = status;
+        }
+
+        public QuestStepState()
+        {
+            State = "";
+            Status = "";
+        }
     }
 }
