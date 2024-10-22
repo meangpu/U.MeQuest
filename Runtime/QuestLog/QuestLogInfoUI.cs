@@ -41,7 +41,7 @@ namespace Meangpu.Quest
         {
             _parentQuestInfo.SetActive(true);
 
-            if (_firstSelectedButton == null)
+            if (_firstSelectedButton != null)
             {
                 _firstSelectedButton.Select();
             }
