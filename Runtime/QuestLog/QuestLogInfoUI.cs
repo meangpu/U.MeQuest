@@ -50,7 +50,7 @@ namespace Meangpu.Quest
             _requirementQuest.SetText("");
             foreach (SOQuestInfo requirement in quest.Info.QuestPrerequisites)
             {
-                _requirementQuest.text += requirement.DisplayName + "\n";
+                _requirementQuest.text += $"{requirement.DisplayName}\n";
             }
         }
 
