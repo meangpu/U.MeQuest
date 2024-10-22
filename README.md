@@ -8,4 +8,15 @@ learn and adapt from
 https://github.com/meangpu/U.MeQuest.git
 ```
 
-to use = crate new quest by inherit Quest.cs
+to use
+
+- create SOObject for quest to hold all quest step
+- crate new quest by inherit `QuestStep`
+- add `QuestStep` script to quest prefab
+
+when start quest, it will
+
+- instantiate QuestStep prefab object
+- on progress will create newStep
+- on no more progress will mark finish then
+- spawn reward prefab
