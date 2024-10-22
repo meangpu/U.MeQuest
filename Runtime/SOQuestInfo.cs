@@ -17,7 +17,7 @@ namespace Meangpu.Quest
         public SOQuestInfo[] QuestPrerequisites;
 
         [Header("Steps")]
-        public GameObject[] QuestStepPrefabs;
+        public QuestStep[] QuestStepPrefabs;
 
         [Header("Rewards")]
         public QuestReward[] RewardPrefab;

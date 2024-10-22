@@ -7,3 +7,5 @@ learn and adapt from
 ```text
 https://github.com/meangpu/U.MeQuest.git
 ```
+
+to use = crate new quest by inherit Quest.cs

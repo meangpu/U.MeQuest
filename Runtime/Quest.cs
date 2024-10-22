@@ -35,17 +35,17 @@ namespace Meangpu.Quest
 
         public void InstantiateCurrentQuestStep(Transform parentTransform)
         {
-            GameObject questStepPrefab = GetCurrentQuestStepPrefab();
+            QuestStep questStepPrefab = GetCurrentQuestStepPrefab();
             if (questStepPrefab != null)
             {
-                QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform).GetComponent<QuestStep>();
+                QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform);
                 questStep.InitializeQuestStep(Info, _currentQuestStepIndex, _questStepStates[_currentQuestStepIndex].State);
             }
         }
 
-        private GameObject GetCurrentQuestStepPrefab()
+        private QuestStep GetCurrentQuestStepPrefab()
         {
-            GameObject questStepPrefab = null;
+            QuestStep questStepPrefab = null;
             if (IsCurrentStepExists()) questStepPrefab = Info.QuestStepPrefabs[_currentQuestStepIndex];
             else Debug.LogWarning($"QuestStepIsOutOfRange:{Info.Id}//{Info.name}");
             return questStepPrefab;
