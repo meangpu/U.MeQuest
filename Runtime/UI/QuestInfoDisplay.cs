@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Meangpu.Quest
@@ -9,12 +8,12 @@ namespace Meangpu.Quest
 
         void OnEnable()
         {
-            // QuestEvent.OnQuestStateChange += UpdateQuestUI;
+            QuestEvent.OnQuestStateChange += UpdateQuestUI;
             QuestEvent.OnStartQuest += AddQuestToUI;
         }
         void OnDisable()
         {
-            // QuestEvent.OnQuestStateChange -= UpdateQuestUI;
+            QuestEvent.OnQuestStateChange -= UpdateQuestUI;
             QuestEvent.OnStartQuest -= AddQuestToUI;
         }
 

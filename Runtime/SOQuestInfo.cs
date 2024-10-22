@@ -8,6 +8,7 @@ namespace Meangpu.Quest
         [field: SerializeField] public string Id { get; private set; }
         [Header("General")]
         public string DisplayName;
+        [TextArea]
         public string Description;
 
         [Header("Requirement")]
