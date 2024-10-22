@@ -42,10 +42,8 @@ namespace Meangpu.Quest
 
         void SetQuestInfo(Quest quest)
         {
-            _questName.SetText(quest.Info.DisplayName);
-            _questName.SetText(quest.Info.DisplayName);
-
             Debug.Log($"{quest.GetFullStatusText()}");
+            _questName.SetText(quest.Info.DisplayName);
             _questStatus.SetText(quest.GetFullStatusText());
 
             _requirementLevel.SetText(quest.Info.LevelRequirement.ToString());
