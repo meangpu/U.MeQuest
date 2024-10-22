@@ -13,6 +13,7 @@ namespace Meangpu.Quest
 
         [Header("Requirement")]
         public int LevelRequirement;
+
         public SOQuestInfo[] QuestPrerequisites;
 
         [Header("Steps")]
