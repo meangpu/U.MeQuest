@@ -47,7 +47,7 @@ namespace Meangpu.Quest
         {
             QuestStep questStepPrefab = null;
             if (IsCurrentStepExists()) questStepPrefab = Info.QuestStepPrefabs[_currentQuestStepIndex];
-            else Debug.LogWarning($"QuestStepIsOutOfRange:{Info.Id}//{Info.name}");
+            else Debug.LogWarning($"QuestStepIsOutOfRange:{Info.name}//{Info.name}");
             return questStepPrefab;
         }
 
@@ -60,7 +60,7 @@ namespace Meangpu.Quest
             }
             else
             {
-                Debug.LogWarning($"index of quest step is out of range{Info.Id}");
+                Debug.LogWarning($"index of quest step is out of range{Info.name}");
             }
         }
 
