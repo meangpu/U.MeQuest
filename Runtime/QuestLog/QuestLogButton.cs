@@ -11,14 +11,17 @@ namespace Meangpu.Quest
         public Button Button { get; private set; }
         TMP_Text _text;
         UnityAction onSelectAction;
+        public Quest QuestData { get; private set; }
+
         [SerializeField] Color _colReqNotMet;
         [SerializeField] Color _colCanStart;
         [SerializeField] Color _colInProgress;
         [SerializeField] Color _colCanFinish;
         [SerializeField] Color _colFInished;
 
-        public void Initialize(string displayName, UnityAction selectAction)
+        public void Initialize(Quest quest, string displayName, UnityAction selectAction)
         {
+            QuestData = quest;
             Button = GetComponent<Button>();
             _text = GetComponentInChildren<TMP_Text>();
             _text.SetText(displayName);

@@ -56,7 +56,7 @@ namespace Meangpu.Quest
             RectTransform buttonRect = current_log.GetComponent<RectTransform>();
 
 
-            current_log.Initialize(quest.Info.DisplayName, () =>
+            current_log.Initialize(quest, quest.Info.DisplayName, () =>
             {
                 selectAction();
                 UpdateScrolling(buttonRect);

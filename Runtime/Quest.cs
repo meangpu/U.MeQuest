@@ -84,7 +84,6 @@ namespace Meangpu.Quest
                     fullStatus += $"{_questStepStates[_currentQuestStepIndex].Status}\n";
                 }
             }
-
             switch (State)
             {
                 case QuestState.REQUIREMENTS_NOT_MET:

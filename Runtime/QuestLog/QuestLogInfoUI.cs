@@ -23,7 +23,6 @@ namespace Meangpu.Quest
         [SerializeField] TMP_Text _requirementQuest;
 
         Quest _lastQuest;
-
         Button _lastSelectedButton;
 
         void OnEnable()
@@ -65,8 +64,6 @@ namespace Meangpu.Quest
         void QuestStateChange(Quest quest)
         {
             QuestLogButton logEntry = _scrollList.CreateButtonIfNotExist(quest, () => { SetQuestInfo(quest); });
-            _lastQuest = quest;
-
             if (_lastSelectedButton == null)
             {
                 _lastSelectedButton = logEntry.Button;
@@ -76,12 +73,9 @@ namespace Meangpu.Quest
 
         void UpdateDescription(Quest quest)
         {
-            if (quest.Equals(_lastQuest))
-            {
-                _questStatus.SetText(quest.GetFullStatusText());
-            }
+            if (_lastQuest == null || !_lastQuest.Equals(quest)) return;
+            _questStatus.SetText(quest.GetFullStatusText());
         }
-
 
         void SetQuestInfo(Quest quest)
         {
@@ -93,6 +87,7 @@ namespace Meangpu.Quest
             {
                 _requirementQuest.text += $"{requirement.DisplayName}\n";
             }
+            _lastQuest = quest;
         }
 
     }
