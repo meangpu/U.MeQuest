@@ -126,7 +126,7 @@ namespace Meangpu.Quest
             {
                 foreach (QuestReward reward in quest.Info.RewardPrefab) reward.GetReward();
             }
-            Debug.Log($"get reward from {quest.Info.Id}");
+            Debug.Log($"get reward from {quest.Info.name}");
         }
 
         private Quest GetQuestByID(SOQuestInfo questInfo)
@@ -156,12 +156,12 @@ namespace Meangpu.Quest
             {
                 QuestData questData = quest.GetQuestData();
                 string serializedData = JsonUtility.ToJson(questData);
-                PlayerPrefs.SetString(quest.Info.Id, serializedData);
+                PlayerPrefs.SetString(quest.Info.name, serializedData);
                 // Debug.Log($"{serializedData}");
             }
             catch (Exception e)
             {
-                Debug.LogError("fail to save quest with id" + quest.Info.Id + ":" + e);
+                Debug.LogError("fail to save quest with name" + quest.Info.name + ":" + e);
             }
         }
 
@@ -171,9 +171,9 @@ namespace Meangpu.Quest
 
             try
             {
-                if (PlayerPrefs.HasKey(questInfo.Id) && _doLoadDataFromSave)
+                if (PlayerPrefs.HasKey(questInfo.name) && _doLoadDataFromSave)
                 {
-                    string serializedData = PlayerPrefs.GetString(questInfo.Id);
+                    string serializedData = PlayerPrefs.GetString(questInfo.name);
                     QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
                     quest = new Quest(questInfo, questData.State, questData.QuestStepIndex, questData.QuestStepStates);
                 }
@@ -184,7 +184,7 @@ namespace Meangpu.Quest
             }
             catch (Exception e)
             {
-                Debug.LogError("fail to save quest with id" + quest.Info.Id + ":" + e);
+                Debug.LogError("fail to save quest with name" + quest.Info.name + ":" + e);
             }
             return quest;
         }

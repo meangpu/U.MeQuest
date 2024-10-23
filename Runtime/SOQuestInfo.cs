@@ -5,7 +5,6 @@ namespace Meangpu.Quest
     [CreateAssetMenu(fileName = "SOQuestInfo", menuName = "MeQuest/SOQuestInfo", order = 1)]
     public class SOQuestInfo : ScriptableObject
     {
-        [field: SerializeField] public string Id { get; private set; }
         [Header("General")]
         public string DisplayName;
         [TextArea]
@@ -22,12 +21,5 @@ namespace Meangpu.Quest
         [Header("Rewards")]
         public QuestReward[] RewardPrefab;
 
-        private void OnValidate()
-        {
-#if UNITY_EDITOR
-            Id = name;
-            UnityEditor.EditorUtility.SetDirty(this);
-#endif
-        }
     }
 }
