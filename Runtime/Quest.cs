@@ -72,15 +72,8 @@ namespace Meangpu.Quest
         public string GetFullStatusText()
         {
             string fullStatus = "";
-            if (State == QuestState.REQUIREMENTS_NOT_MET)
-            {
-                fullStatus = "Requirements not met";
-            }
-            else if (State == QuestState.CAN_START)
-            {
-                fullStatus = "Can start";
-            }
-            else
+
+            void AddQuestStep()
             {
                 for (int i = 0; i < _currentQuestStepIndex; i++)
                 {
@@ -90,17 +83,28 @@ namespace Meangpu.Quest
                 {
                     fullStatus += $"{_questStepStates[_currentQuestStepIndex].Status}\n";
                 }
-                if (State == QuestState.CAN_FINISH)
-                {
-                    fullStatus += $"Quest is ready to be turned in\n";
-                }
-                else if (State == QuestState.FINISHED)
-                {
-                    fullStatus += $"Quest completed!\n";
-                }
-
             }
 
+            switch (State)
+            {
+                case QuestState.REQUIREMENTS_NOT_MET:
+                    fullStatus = "Requirements not met";
+                    break;
+                case QuestState.CAN_START:
+                    fullStatus = "Can start";
+                    break;
+                case QuestState.IN_PROGRESS:
+                    AddQuestStep();
+                    break;
+                case QuestState.CAN_FINISH:
+                    AddQuestStep();
+                    fullStatus += $"Quest is ready to be turned in\n";
+                    break;
+                case QuestState.FINISHED:
+                    AddQuestStep();
+                    fullStatus += $"Quest completed!\n";
+                    break;
+            }
             return fullStatus;
         }
     }
