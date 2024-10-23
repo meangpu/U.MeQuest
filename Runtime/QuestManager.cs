@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Events;
 
 namespace Meangpu.Quest
 {
@@ -10,6 +11,9 @@ namespace Meangpu.Quest
         [SerializeField] bool _doLoadDataFromSave;
         private int _playerCurrentLevel;
         private Dictionary<SOQuestInfo, Quest> _questMap;
+
+        [SerializeField] UnityEvent _onQuestStartEvent;
+        [SerializeField] UnityEvent _onQuestFinishEvent;
 
         private Dictionary<SOQuestInfo, Quest> CreateQuestMap()
         {
@@ -95,6 +99,7 @@ namespace Meangpu.Quest
             Quest quest = GetQuestByID(id);
             quest.InstantiateCurrentQuestStep(transform);
             ChangeQuestState(quest.Info, QuestState.IN_PROGRESS);
+            _onQuestStartEvent?.Invoke();
         }
 
         private void AdvanceQuest(SOQuestInfo id)
@@ -111,6 +116,7 @@ namespace Meangpu.Quest
             ClaimReward(quest);
             ChangeQuestState(quest.Info, QuestState.FINISHED);
             UpdateQuestThatPlayerCanStart();
+            _onQuestFinishEvent?.Invoke();
         }
 
         private void QuestStepStateChange(SOQuestInfo id, int stepIndex, QuestStepState questStepState)

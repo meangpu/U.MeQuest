@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,11 +25,13 @@ namespace Meangpu.Quest
 
         private void RemoveQuest(SOQuestInfo info)
         {
+            if (_questList.Count == 0) return;
             foreach (CurrentQuestInfoHolderUI currentQuest in _questList)
             {
                 if (!currentQuest.Info.Equals(info)) return;
                 _questList.Remove(currentQuest);
                 Destroy(currentQuest.gameObject);
+                return;
             }
         }
 
@@ -39,8 +40,8 @@ namespace Meangpu.Quest
             CurrentQuestInfoHolderUI nowUI = Instantiate(questPrefab, transform);
             nowUI.SetQuestUIData(questInfo);
             _questList.Add(nowUI);
-        }
 
+        }
         private void UpdateQuestUI(Quest quest)
         {
             foreach (CurrentQuestInfoHolderUI currentQuest in _questList)
