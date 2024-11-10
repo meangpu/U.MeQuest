@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Meangpu.Quest
 {
-    [CreateAssetMenu(fileName = "SOQuestInfo", menuName = "Meangpu/SOQuestInfo", order = 1)]
+    [CreateAssetMenu(fileName = "SOQuestInfo", menuName = "Meangpu/SOQuestInfo")]
     public class SOQuestInfo : ScriptableObject
     {
         [Header("General")]
